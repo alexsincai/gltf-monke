@@ -27,3 +27,16 @@ body {
     width: 200px;
     aspect-ratio: 1;
 }
+
+.dg {
+    & .cr.number {
+        border-left-color: var(--primary) !important;
+    }
+    & .c .slider-fg {
+        background: var(--primary) !important;
+    }
+
+    & .cr.number input[type="text"] {
+        color: var(--primary) !important;
+    }
+}
