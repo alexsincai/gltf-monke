@@ -3,6 +3,15 @@ import "./styles.css";
 
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+let colors = ["bg", "text", "primary", "alt"]
+    .map((c) => ({
+        [c]: parseInt(
+            getComputedStyle(document.documentElement)
+                .getPropertyValue(`--${c}`)
+                .replace("#", "0x")
+        ),
+    }))
+    .reduce((a, v) => ({ ...a, ...v }), {});
 
 class Demo {
     scene: THREE.Scene;
