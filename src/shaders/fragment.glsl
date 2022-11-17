@@ -104,7 +104,7 @@ void main() {
   float oblic = cos((vScreenSpace.y - vScreenSpace.x) * 100.0 * TAU);
   oblic = oblic * 0.5 + 0.5;
   oblic += lightPos;
-  oblic -= cnoise(150.0 * vScreenSpace.xyy);
+  oblic -= cnoise(150.0 * vec3(vScreenSpace, time));
   oblic = clamp(oblic, 0.0, 1.0);
 
   vec3 color = mix(dark, light, oblic);

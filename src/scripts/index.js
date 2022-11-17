@@ -66,6 +66,7 @@ const material = new ShaderMaterial({
             //     : new Vector3(...colors.alt),
         },
         lightPosition: { value: camera.position },
+        time: { value: 0 },
     },
     vertexShader: vertexShader,
     fragmentShader: fragmentShader,
@@ -95,6 +96,7 @@ function onWindowResize() {
 function animate() {
     requestAnimationFrame(animate);
     controls.update();
+    material.uniforms.time.value += 0.00005;
     render();
 }
 
