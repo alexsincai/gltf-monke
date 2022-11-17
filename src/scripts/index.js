@@ -53,8 +53,18 @@ const material = new ShaderMaterial({
     },
     side: DoubleSide,
     uniforms: {
-        dark: { value: new Vector3(...colors.bg) },
-        light: { value: new Vector3(...colors.primary) },
+        dark: {
+            value: new Vector3(...colors.bg),
+            // value: window?.matchMedia("(prefers-color-scheme: dark)").matches
+            //     ? new Vector3(...colors.bg)
+            //     : new Vector3(...colors.text),
+        },
+        light: {
+            value: new Vector3(...colors.primary),
+            // value: window?.matchMedia("(prefers-color-scheme: dark)").matches
+            //     ? new Vector3(...colors.primary)
+            //     : new Vector3(...colors.alt),
+        },
         lightPosition: { value: camera.position },
     },
     vertexShader: vertexShader,
@@ -75,6 +85,12 @@ function onWindowResize() {
     renderer.setSize(window.innerWidth, window.innerHeight);
     render();
 }
+// window
+//     .matchMedia("(prefers-color-scheme: dark)")
+//     .addEventListener("change", (event) => {
+//         material.uniforms.dark = !event.matches && new Vector3(...colors.text);
+//         material.uniforms.light = !event.matches && new Vector3(...colors.alt);
+//     });
 
 function animate() {
     requestAnimationFrame(animate);
