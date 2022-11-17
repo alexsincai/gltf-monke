@@ -1,7 +1,15 @@
 import "the-new-css-reset/css/reset.css";
 import "../styles/styles.css";
 
-import * as THREE from "three";
+import {
+    Color,
+    Scene,
+    PerspectiveCamera,
+    WebGLRenderer,
+    ShaderMaterial,
+    DoubleSide,
+    Vector3,
+} from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
@@ -11,7 +19,7 @@ import fragmentShader from "../shaders/fragment.glsl";
 
 let colors = ["bg", "text", "primary", "alt"]
     .map((c) => ({
-        [c]: new THREE.Color(
+        [c]: new Color(
             ...getComputedStyle(document.documentElement)
                 .getPropertyValue(`--${c}`)
                 .replace("#", "")
@@ -21,8 +29,8 @@ let colors = ["bg", "text", "primary", "alt"]
     }))
     .reduce((a, v) => ({ ...a, ...v }), {});
 
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(
+const scene = new Scene();
+const camera = new PerspectiveCamera(
     55,
     window.innerWidth / window.innerHeight,
     0.1,
@@ -30,7 +38,7 @@ const camera = new THREE.PerspectiveCamera(
 );
 camera.position.z = 5;
 
-const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+const renderer = new WebGLRenderer({ antialias: true, alpha: true });
 renderer.physicallyCorrectLights = true;
 renderer.shadowMap.enabled = true;
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -39,14 +47,14 @@ document.body.appendChild(renderer.domElement);
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 
-const material = new THREE.ShaderMaterial({
+const material = new ShaderMaterial({
     extensions: {
         derivatives: "#extension GL_OES_standard_derivatives: enable",
     },
-    side: THREE.DoubleSide,
+    side: DoubleSide,
     uniforms: {
-        dark: { value: new THREE.Vector3(...colors.bg) },
-        light: { value: new THREE.Vector3(...colors.primary) },
+        dark: { value: new Vector3(...colors.bg) },
+        light: { value: new Vector3(...colors.primary) },
         lightPosition: { value: camera.position },
     },
     vertexShader: vertexShader,
