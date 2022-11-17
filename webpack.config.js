@@ -1,20 +1,37 @@
 const webpack = require("webpack");
 const path = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HtmlMinimizerPlugin = require("html-minimizer-webpack-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
-// const HtmlWebpackPlugin = require("html-webpack-plugin");
 const BundleAnalyzerPlugin =
     require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 const config = {
-    entry: "./src/index.ts",
+    entry: "./src/scripts/index.js",
     output: {
         path: path.resolve(__dirname, "dist"),
         filename: "bundle.js",
     },
+    devServer: {
+        static: {
+            directory: path.join(__dirname, "dist"),
+        },
+        compress: true,
+        open: true,
+        port: 9000,
+        client: {
+            logging: "none",
+        },
+    },
     module: {
         rules: [
+            {
+                test: /\.html$/i,
+                type: "asset/resource",
+            },
             {
                 test: /\.js$/,
                 use: "babel-loader",
@@ -34,31 +51,27 @@ const config = {
                 ],
             },
             {
-                test: /\.ts(x)?$/,
-                loader: "ts-loader",
-                exclude: /node_modules/,
+                test: /\.glsl$/,
+                loader: "webpack-glsl-loader",
             },
             {
-                test: /\.png$/,
-                use: [
-                    {
-                        loader: "url-loader",
-                        options: {
-                            mimetype: "image/png",
-                        },
-                    },
-                ],
+                test: /\.gl(b|tf)$/,
+                use: [{ loader: "gltf-webpack-loader" }],
             },
+        ],
+    },
+    optimization: {
+        minimize: true,
+        minimizer: [
+            new HtmlMinimizerPlugin(),
+            new CssMinimizerPlugin(),
+            new TerserPlugin(),
         ],
     },
     plugins: [
         new CopyPlugin({
             patterns: [{ from: "src/index.html" }],
         }),
-        // new HtmlWebpackPlugin({
-        //   templateContent: ({ htmlWebpackPlugin }) => '<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>' + htmlWebpackPlugin.options.title + '</title></head><body></body></html>',
-        //   filename: 'index.html',
-        // }),
         new BundleAnalyzerPlugin({
             analyzerMode: "static",
             openAnalyzer: false,
@@ -67,7 +80,7 @@ const config = {
         new CleanWebpackPlugin(),
     ],
     resolve: {
-        extensions: [".tsx", ".ts", ".js"],
+        extensions: [".js"],
     },
 };
 

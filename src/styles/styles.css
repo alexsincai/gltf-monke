@@ -1,8 +1,13 @@
 :root {
-    --light: #fdf7df;
+    /* --light: #fdf7df;
     --dark: #234666;
     --accent: #db3c53;
-    --accent2: #e2985c;
+    --accent2: #e2985c; */
+
+    --light: #f6f5f5;
+    --dark: #3c2330;
+    --accent: #932155;
+    --accent2: #f38836;
 
     --bg: var(--light);
     --text: var(--dark);
@@ -25,10 +30,12 @@
 }
 
 body {
+    /*  
     display: grid;
     grid-template-columns: 200px 200px;
     gap: 10px;
     place-content: center;
+    */
     height: 100vh;
     width: 100vw;
 }
@@ -43,11 +50,11 @@ a {
     }
 }
 
-.cam {
+/* .cam {
     display: block;
     width: 200px;
     aspect-ratio: 1;
-}
+} */
 
 .dg {
     & .cr.number {
