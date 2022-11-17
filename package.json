@@ -8,7 +8,7 @@
     "license": "ISC",
     "scripts": {
         "dev": "webpack-dev-server --mode development --open --hot",
-        "prod": "rm -rf dist/ && webpack --mode production && rm -rf dist/report.html && rm -rf dist/bundle.js.LICENSE.txt"
+        "prod": "rm -rf docs/ && webpack --mode production && rm -rf docs/report.html && rm -rf docs/bundle.js.LICENSE.txt"
     },
     "devDependencies": {
         "@babel/core": "^7.20.2",

@@ -12,12 +12,12 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const config = {
     entry: "./src/scripts/index.js",
     output: {
-        path: path.resolve(__dirname, "dist"),
+        path: path.resolve(__dirname, "docs"),
         filename: "bundle.js",
     },
     devServer: {
         static: {
-            directory: path.join(__dirname, "dist"),
+            directory: path.join(__dirname, "docs"),
         },
         compress: true,
         open: true,
